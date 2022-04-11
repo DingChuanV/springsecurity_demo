@@ -33,6 +33,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        System.out.println(request.getRemoteAddr());
         //获取认证用户的信息
         User user = (User) authentication.getPrincipal();
         System.out.println(user.getUsername());
