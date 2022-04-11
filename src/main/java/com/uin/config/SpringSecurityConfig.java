@@ -1,5 +1,7 @@
 package com.uin.config;
 
+import com.uin.handler.MyAuthenticationSuccessHandler;
+import com.uin.handler.MyForwardAuthenticationFailureHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,14 +31,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .usernameParameter("name")
                 //必须和表单的提交是一样的
-                .loginProcessingUrl("/login").
+                .loginProcessingUrl("/login")
                 //自定义登陆页面
-                        loginPage("/login.html").
+                .loginPage("/login.html")
                 //登陆成功之后跳转的页面 必须是Post强求
-                        //还有一点值得注意的，我们现在开发项目大多数都是前后端分离，这种跳转是行不通的。
-                        successForwardUrl("/toMain").
+                //还有一点值得注意的，我们现在开发项目大多数都是前后端分离，这种跳转是行不通的。
+                //.successForwardUrl("/toMain").
+                //实现自定义认证之后的跳转路径  successForwardUrl不能共存
+                .successHandler(new MyAuthenticationSuccessHandler("http://www.baidu.com"))
                 //登陆失败跳转的页面
-                        failureForwardUrl("/toError");
+                //.failureForwardUrl("/toError")
+                .failureHandler(new MyForwardAuthenticationFailureHandler("http://www.cnblogs.com/bearbrick0/p/16129311.html"));
 
         //authorizeRequests 授权请求
         //authenticated 认证
