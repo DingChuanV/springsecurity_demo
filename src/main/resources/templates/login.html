@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>login</title>
@@ -9,6 +8,7 @@
 <body>
 
 <form action="/login" method="post">
+    <input type="hidden" th:value="${_csrf.token}" name="_csrf" th:if="${_csrf}">
     用户名：<input type="text" name="username" placeholder="请输入用户名">
     用户名：<input type="text" name="username" placeholder="请输入用户名">
 

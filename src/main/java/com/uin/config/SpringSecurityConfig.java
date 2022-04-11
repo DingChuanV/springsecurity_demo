@@ -54,7 +54,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("pwd")
 
                 //2. 必须和表单的提交是一样的
-                .loginProcessingUrl("/login")
+                //.loginProcessingUrl("/login")
+                .loginProcessingUrl("/showLogin")
                 //自定义登陆页面
                 .loginPage("/login.html")
 
@@ -131,7 +132,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         //关闭防火墙
-        http.csrf().disable();
+        //http.csrf().disable();
 
 
         //自定义403 权限异常

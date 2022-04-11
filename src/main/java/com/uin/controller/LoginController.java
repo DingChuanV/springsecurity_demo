@@ -90,4 +90,16 @@ public class LoginController {
     public String demo() {
         return "demo";
     }
+
+    /**
+     * CSRF的页面跳转
+     *
+     * @return java.lang.String
+     * @author wanglufei
+     * @date 2022/4/11 4:35 PM
+     */
+    @RequestMapping("showLogin")
+    public String showLogin() {
+        return "login";
+    }
 }
