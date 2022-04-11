@@ -99,7 +99,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 //5. 基于表达式的访问控制
                 //access()
                 //上面的都是
-                .antMatchers("/main.html").access("permitAll()")
+                //.antMatchers("/main.html").access("permitAll()")
 
                 //6. 基于注解的访问控制
                 //默认的不可用的，需要使用@EnableGlobalMethodSecurity(securedEnabled = true) 在程序的启动开启上开启
@@ -107,6 +107,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 //通常的情况都是写在控制器（controller）的方法上，控制接口和Url是否被允许
                 //常见的注解访问控制
                 //1. @Secured  专门判断是否具有角色。能够写在方法上或者类上。参数要ROLE_开头
+                //2. @PreAuthorize()和@PostAuthorize()都是方法或类级别的注解
+                //   @PreAuthorize()表示访问方法或类在执行之前判断权限，大多情况下都是使用这个注解，注解的参数和access()
+                //一样。都是权限表达是
+                //   @PostAuthorize()表示在方法或类执行之后进行权限判断，此注解很少用。
+                // 当然使用它，也是需要去开启的，方法还是一样
+                // @EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true)
 
                 //任何的请求都要认证
                 .anyRequest().authenticated();

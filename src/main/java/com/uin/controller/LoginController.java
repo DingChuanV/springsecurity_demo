@@ -1,5 +1,8 @@
 package com.uin.controller;
 
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,32 @@ public class LoginController {
      */
     @RequestMapping("/toMain")
     public String toMain() {
+        return "redirect:main";
+    }
+
+    /**
+     * 登陆成功跳转页面 基于注解配置
+     *
+     * @return java.lang.String
+     * @Secured("ROLE_uin") 判断是否是uin这个角色
+     * @author wanglufei
+     * @date 2022/4/11 2:20 PM
+     */
+    @Secured("ROLE_uin")
+    @RequestMapping("/toMain")
+    public String toMain2() {
+        return "redirect:main";
+    }
+
+    /**
+     * @return java.lang.String
+     * @PreAuthorize("hasAnyRole('uin')") 可以不用ROLE_开头
+     * @author wanglufei
+     * @date 2022/4/11 2:29 PM
+     */
+    @PreAuthorize("hasAnyRole('uin')")
+    @RequestMapping("/toMain")
+    public String toMain3() {
         return "redirect:main";
     }
 
