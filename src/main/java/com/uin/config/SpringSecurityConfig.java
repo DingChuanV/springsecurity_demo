@@ -149,6 +149,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
                 //持久层对象
                 .tokenRepository(persistentTokenRepository);
+
+        //退出功能
+        http.logout()
+                //自定义退出的url
+                .logoutSuccessUrl("/login.html");
     }
 
     /**
