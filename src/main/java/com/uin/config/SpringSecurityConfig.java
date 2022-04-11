@@ -3,6 +3,7 @@ package com.uin.config;
 import com.uin.handler.MyAccessDeniedHandler;
 import com.uin.handler.MyAuthenticationSuccessHandler;
 import com.uin.handler.MyForwardAuthenticationFailureHandler;
+import com.uin.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * @author wanglufei
@@ -25,6 +30,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MyAccessDeniedHandler myAccessDeniedHandler;
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    DataSource dataSource;
+    @Autowired
+    PersistentTokenRepository persistentTokenRepository;
+
     /**
      * 自定义登陆之后的逻辑
      * 1.自定义登陆页面
@@ -122,9 +134,21 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
 
-        //自定义403权限异常
+        //自定义403 权限异常
         http.exceptionHandling()
                 .accessDeniedHandler(myAccessDeniedHandler);
+
+        //rememberMe 功能
+        //当用户选择记住我的时候，它底层会把用户的数据信息放到数据库中
+        http.rememberMe()
+                //自定义过期时间 s
+                //.tokenValiditySeconds(600000)
+                //自定义参数
+                //.rememberMeParameter("remember")
+                //自定义的UserDetailsServiceImpl
+                .userDetailsService(userDetailsService)
+                //持久层对象
+                .tokenRepository(persistentTokenRepository);
     }
 
     /**
@@ -138,5 +162,22 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 配置数据存到数据库
+     *
+     * @return org.springframework.security.web.authentication.rememberme.PersistentTokenRepository
+     * @author wanglufei
+     * @date 2022/4/11 3:01 PM
+     */
+    @Bean
+    public PersistentTokenRepository getPersistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbc = new JdbcTokenRepositoryImpl();
+        //设置数据源
+        jdbc.setDataSource(dataSource);
+        //自动建表 第一次建表改为true 第二次要注释
+        jdbc.setCreateTableOnStartup(true);
+        return jdbc;
     }
 }
