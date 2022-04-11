@@ -36,6 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //2.把查询的密码（注册是已经加过密）进行解析，或者直接把密码放入构造方法
         String password = passwordEncoder.encode("123");
         return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList(
-                "admin,normal,ROLE_uin"));
+                "admin,normal,ROLE_uin,main.html" +
+                        "/insert,/delete"));
     }
 }

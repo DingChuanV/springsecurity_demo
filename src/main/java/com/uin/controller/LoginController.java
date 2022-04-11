@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author wanglufei
@@ -76,5 +77,17 @@ public class LoginController {
     @RequestMapping("/toError")
     public String toError() {
         return "redirect:error.html";
+    }
+
+    /**
+     * 跳转页面
+     *
+     * @return java.lang.String
+     * @author wanglufei
+     * @date 2022/4/11 3:43 PM
+     */
+    @RequestMapping("demo")
+    public String demo() {
+        return "demo";
     }
 }

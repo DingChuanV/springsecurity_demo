@@ -59,6 +59,16 @@
             <version>2.6.2</version>
             <scope>test</scope>
         </dependency>
+        <!--thymeleaf整合SpringSecurity5依赖-->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
+        <!--Springboot整合thymeleaf依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
